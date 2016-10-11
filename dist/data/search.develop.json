@@ -1,0 +1,13 @@
+{
+    "github": {
+        "name": "Github",
+        "keywords": ["github"],
+        "url": "https://github.com/search?q=%s"
+    },
+    "npmjs": {
+        "name": "NPM",
+        "match": "npm{js}?",
+        "url": "https://www.npmjs.com/search?q=%s",
+        "color": "#C12127"
+    }
+}

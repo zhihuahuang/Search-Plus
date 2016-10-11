@@ -1,0 +1,36 @@
+@require 'common';
+
+/* Search Form Start */
+@require 'search';
+
+@media screen and (max-width: 600px) {
+    .container {
+        top: 0;
+        width: 300px;
+        
+        -transform(translate(-50%, 8px));
+    }
+    .search-form button {
+        width: 60px;
+    }
+}
+
+@require 'suggest';
+
+.footer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 4px;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+}
+
+@keyframes stretch {
+    0%,
+    25% {
+        width: 200px;
+    }
+}
