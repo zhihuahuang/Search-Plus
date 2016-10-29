@@ -83,6 +83,12 @@
         "url": "https://search.jd.com/Search?enc=utf-8&keyword=%s",
         "color": "#B61D1D"
     },
+    "suning": {
+        "name": "苏宁",
+        "keywords": ["苏宁", "苏宁易购", "suning"],
+        "url": "http://search.suning.com/%s",
+        "color": "#FA0"
+    },
     "yhd": {
         "name": "1号店",
         "keywords": ["yhd", "1号店"],
@@ -143,7 +149,7 @@
     },
     "shopping": {
         "match": "shopping|购物|买",
-        "engines": ["taobao", "tmall", "jd"]
+        "engines": ["taobao", "tmall", "jd", "suning", "yhd"]
     },
     "default": {
         "engines": ["360"]

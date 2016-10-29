@@ -15,10 +15,19 @@ var autoprefixer = require('gulp-autoprefixer');
 var htmlOptions = {
     removeComments: true,
     collapseWhitespace: true,
-    removeAttributeQuotes: true
+    removeAttributeQuotes: true,
+    minifyJS: {},
+    minifyCSS: {}
 };
 
+var isDebug = false;
+
 gulp.task('minify-html', function () {
+    if (isDebug) {
+        delete htmlOptions.minifyCSS;
+        delete htmlOptions.minifyJS;
+    }
+
     gulp.src('src/**.{html,php}')
         .pipe(htmlmin(htmlOptions))
         .pipe(gulp.dest('dist'));
@@ -69,14 +78,12 @@ gulp.task('minify-image', function () {
 });
 
 gulp.task('copy', function () {
-    gulp.src('node_modules/async/dist/async.min.js')
-        .pipe(gulp.dest('dist/js'));
+    // gulp.src('node_modules/async/dist/async.min.js')
+    //     .pipe(gulp.dest('dist/js'));
     
     gulp.src('src/*.ico')
         .pipe(gulp.dest('dist'));
 });
-
-var isDebug = false;
 
 gulp.task('release', function() {
     isDebug = false;

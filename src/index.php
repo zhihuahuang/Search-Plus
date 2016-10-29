@@ -11,6 +11,10 @@ endif;
 */
 ?>
 
+<?php
+$backgroundImageUrl = 'image/mountains.jpg';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +25,23 @@ endif;
     <!-- IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Search+</title>
+    <!-- 图片预加载   -->
+    <script>
+        function loadImage(images) {
+            var image = new Image();
+            var doneCallback;
+            image.onload = function () {
+                doneCallback(null, image);
+            };
+            image.src = images;
+
+            return {
+                done: function (fn) {
+                    doneCallback = fn || function () {};
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="favicon.ico">
     <style>
@@ -101,7 +122,7 @@ endif;
     </style>
 </head>
 <body>
-    <div class="background" style="background-image: url('image/beijing.jpg');"></div>
+    <div class="background"></div>
     <header>
         <!-- a class="icon-help" href="#help">帮助</a>
         <a class="icon-statement" href="#statement">声明</a -->
@@ -138,6 +159,26 @@ endif;
             </ol>
         </div>
     </div-->
+    <script>
+        (function () {
+            // 如果有默认图片，则设为默认图片
+            var backgroundImage = localStorage.getItem('background-image');
+            if (backgroundImage) {
+                setBackground(backgroundImage);
+            }
+            else {
+                loadImage('<?=$backgroundImageUrl?>').done(function (err, img) {
+                    if (!err) {
+                        setBackground(img.src);
+                    }
+                });
+            }
+
+            function setBackground(background) {
+                document.querySelector('.background').style.backgroundImage = 'url(' + background + ')';
+            }
+        }());
+    </script>
     <script src="http://cdn.staticfile.org/zepto/1.1.6/zepto.min.js"></script>
     <script src="http://cdn.staticfile.org/async/1.5.0/async.min.js"></script>
     <script src="js/main.js"></script>

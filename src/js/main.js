@@ -26,7 +26,19 @@
         // Backspace
         if (event.keyCode == 8 && $searchTextbox.val() == '') {
             event.preventDefault();
-            $searchTextbox.val($searchLabelWrapper.children().last().remove().text());
+            var $lastLabel = $searchLabelWrapper.children().last();
+            var text = $lastLabel.text();
+
+            var lastSpaceIndex =  text.lastIndexOf(' '); // 最后一个空格的位置
+            if (lastSpaceIndex >= 0) {
+                $lastLabel.text(text.substr(0, lastSpaceIndex));
+                text = text.substr(lastSpaceIndex + 1);
+            }
+            else {
+                $lastLabel.remove();
+            }
+
+            $searchTextbox.val(text);
         }
     });
 
@@ -70,19 +82,27 @@
             return;
         }
 
-        text.trim().split(/\s+/).forEach(function (word) {
-            var $label = $('<label>').text(word);
+        var $lastLabel = $searchLabelWrapper.children().last();
 
+        // 按空白符切割
+        text.trim().split(/\s+/).forEach(function (word) {
             var engineName = searchConfig.matchEngine(word);
             if(engineName) {
                 var color = searchConfig.getEngine(engineName).color || '#999';
-                $label.css({
+                $lastLabel = $('<label>').text(word).attr('data-engine', engineName).css({
                     'background': color,
                     'border-color': color
-                }).attr('data-engine', engineName);
+                });
+                $searchLabelWrapper.append($lastLabel);
             }
-
-            $searchLabelWrapper.append($label);
+            // 上一个标签不存在 或者 是关键词
+            else if (!$lastLabel.length || $lastLabel.attr('data-engine')) {
+                $lastLabel = $('<label>').text(word);
+                $searchLabelWrapper.append($lastLabel);
+            }
+            else {
+                $lastLabel.text($lastLabel.text() + ' ' + word);
+            }
         });
         $searchTextbox.val('');
     }
@@ -109,7 +129,6 @@
                 querys = [];
 
             $searchLabelWrapper.children().each(function (index, element) {
-                console.log(element);
                 var $element = $(element);
                 var engine = $element.attr('data-engine');
                 if (engine) {

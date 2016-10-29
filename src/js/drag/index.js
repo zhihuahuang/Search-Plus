@@ -26,9 +26,3 @@ dragFile.bind($background[0], {
         });
     }
 });
-
-// 如果有默认图片，则设为默认图片
-var backgroundImage = localStorage.getItem('background-image');
-if (backgroundImage) {
-    $background.css('background-image', 'url(' + backgroundImage + ')');
-}

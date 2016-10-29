@@ -10,5 +10,11 @@
         "match": "花瓣网?",
         "url": "http://huaban.com/search/?q=%s",
         "color": "#E53E49"
+    },
+    "pixabay": {
+        "name": "Pixabay",
+        "match": "pixabay",
+        "url": "https://pixabay.com/photos/?q=%s",
+        "color": "#57B057"
     }
 }
